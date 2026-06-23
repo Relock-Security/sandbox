@@ -31,7 +31,7 @@ Requires Node 18+.
 **Run straight from GitHub (no clone):**
 
 ```bash
-npx github:Relock-Security/sandbox
+npx github:Relock-Security/sandbox#v0.1.0
 npx playwright install chromium # first time only — downloads the browser (~150MB)
 ```
 
@@ -44,6 +44,8 @@ npm install                     # installs Playwright + downloads its Chromium
 npm start                       # or:  node index.mjs
 ```
 
+> **Heads-up on install:** `npm install` runs a `postinstall` step that downloads Chromium (~150 MB) through Playwright's own installer. If your environment blocks postinstall scripts (e.g. `npm ci --ignore-scripts`), run `npx playwright install chromium` manually afterward — the harness will also prompt you to if the browser is missing.
+
 ## Read before you run
 
 All session-touching logic is in **`attacks.mjs`** — `capture()` and `replay()`, in plain Playwright, fully commented. `index.mjs` is only the terminal flow around it. Read `attacks.mjs` first; there is nothing hidden elsewhere.
@@ -51,6 +53,10 @@ All session-touching logic is in **`attacks.mjs`** — `capture()` and `replay()
 ## Reading the results
 
 Results depend on the security and observability controls the target app has in place, so a block is not by itself proof of binding-grade protection — it may be a coarser, partial control. The harness only records what happened; to capture results over time and compare them, use the Relock self-assessment dashboard. Note that the attacker runs from your own machine and IP, which removes the network as a variable.
+
+## Security & data
+
+See [SECURITY.md](SECURITY.md) for exactly what the tool touches, what it records (metadata only — never your session material), what leaves your machine (nothing, beyond the browser visiting your target), and how to report a vulnerability.
 
 ## License
 

@@ -35,7 +35,8 @@ export async function capture(victimPage, victimContext, tier) {
 
   // Cookies are read from the cookie STORE — this includes HttpOnly cookies,
   // exactly like disk-level malware, and unlike anything document.cookie can see.
-  loot.cookies = await victimContext.cookies();
+  // Scoped to the origin the user logged into, so we don't sweep unrelated cookies.
+  loot.cookies = await victimContext.cookies(victimPage.url());
 
   if (t.captures.includes('storage')) {
     const dumped = await victimPage.evaluate(() => {
@@ -109,6 +110,13 @@ export function summarize(loot) {
   return lines;
 }
 
+// Strip query and fragment so we never display or record a URL that might
+// carry a token (some apps put access tokens in ?query or #fragment).
+const safeUrl = (u) => {
+  try { const x = new URL(u); return x.origin + x.pathname; }
+  catch { return '[unparseable-url]'; }
+};
+
 // ── REPLAY ───────────────────────────────────────────────────────────────
 // Builds a FRESH context (a separate "device" with none of the victim's
 // material), injects the loot, and navigates to the target. Returns the
@@ -171,8 +179,9 @@ export async function replay(browser, target, loot) {
 
   await page.goto(target, { waitUntil: 'domcontentloaded' }).catch(() => {});
 
-  const finalUrl = page.url();
-  const looksLikeLogin = /login|sign-?in|auth(enticate)?/i.test(finalUrl);
+  const rawUrl = page.url();
+  const finalUrl = safeUrl(rawUrl); // origin + path only — never persist query/fragment
+  const looksLikeLogin = /login|sign-?in|auth(enticate)?/i.test(rawUrl);
 
   return { attacker, page, finalUrl, looksLikeLogin };
 }

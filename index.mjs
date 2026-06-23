@@ -54,6 +54,13 @@ You'll run up to three attacks, T1 → T3, each more thorough than the last.`);
   let browser = null;
   let outerQuit = false;
 
+  // Clean up the launched browser if the user interrupts mid-run.
+  process.on('SIGINT', async () => {
+    try { if (browser) await browser.close(); } catch (e) {}
+    out('\n  ' + C.dim + 'Interrupted — browser closed.' + C.reset);
+    process.exit(130);
+  });
+
   while (!outerQuit) {
     // ── Screen 1: target ──
     title('Target application');
