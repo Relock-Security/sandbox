@@ -1,0 +1,21 @@
+{
+  "name": "@relock/harness",
+  "version": "0.1.0",
+  "description": "Session-replay test harness — captures a logged-in session and replays it from a fresh browser to prove whether it can be hijacked. Runs locally; sends nothing.",
+  "type": "module",
+  "bin": {
+    "relock-harness": "./index.mjs"
+  },
+  "scripts": {
+    "start": "node index.mjs",
+    "postinstall": "playwright install chromium"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "playwright": "^1.45.0"
+  },
+  "license": "Apache-2.0",
+  "private": false
+}
