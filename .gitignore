@@ -1,0 +1,9 @@
+node_modules/
+relock-assessment.json
+relock-export.json
+relock-export*.json
+*.log
+npm-debug.log*
+.DS_Store
+.env
+.env.*
