@@ -19,17 +19,17 @@ export const TIERS = {
   T1: {
     id: 'T1', name: 'Cookie Replay',
     captures: ['cookies'],
-    blurb: 'Cookies only, replayed from a different device. Pass-the-cookie.',
+    blurb: 'your cookies only, replayed from an attacker\'s device',
   },
   T2: {
     id: 'T2', name: 'Session Hijack',
     captures: ['cookies', 'storage'],
-    blurb: 'All cookies + localStorage + sessionStorage (the full infostealer dump), from a different device.',
+    blurb: 'your cookies + localStorage + sessionStorage, replayed from an attacker\'s device',
   },
   T3: {
     id: 'T3', name: 'Identity Impersonation',
     captures: ['cookies', 'storage'],
-    blurb: 'The same material as T2, with the victim device fingerprint matched — the IMPaaS case.',
+    blurb: 'the same material as T2, replayed from a device that looks like yours',
   },
 };
 
