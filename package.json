@@ -1,6 +1,6 @@
 {
   "name": "@relock/harness",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Session-replay test harness — captures a logged-in session and replays it from a fresh browser to prove whether it can be hijacked. Runs locally; sends nothing.",
   "type": "module",
   "bin": {
